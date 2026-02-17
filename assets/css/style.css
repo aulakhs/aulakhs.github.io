@@ -140,6 +140,9 @@ body {
 /* -- Article Page -- */
 .article-header {
     padding: 48px 0 32px;
+    text-align: center;
+    border-bottom: 3px solid var(--accent);
+    margin-bottom: 32px;
 }
 
 .article-header h1 {
@@ -147,11 +150,14 @@ body {
     font-weight: 700;
     line-height: 1.25;
     margin-bottom: 16px;
+    text-align: center;
+    color: var(--accent);
 }
 
 .article-header .post-meta {
     font-size: 0.95em;
     color: var(--text-secondary);
+    text-align: center;
 }
 
 .article-body {

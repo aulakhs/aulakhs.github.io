@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mythbusters: The Questions Everyone's Too Embarrassed To Ask — Sandeep Aulakh</title>
+    <meta name="description" content="No jargon, no hype — straight answers to the AI questions smart people are too embarrassed to ask. LLMs, agents, vibe coding, and the business models behind it all.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="/" class="site-title">Sandeep Aulakh</a>
+            <nav class="site-nav">
+                <a href="/">Writing</a>
+                <a href="https://linkedin.com/in/aulakhsandeep" target="_blank">LinkedIn</a>
+                <a href="https://github.com/aulakhs" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="article-header">
+            <h1>AI Mythbusters: The Questions Everyone's Too Embarrassed To Ask</h1>
+            <div class="post-meta">February 16, 2026 &middot; 8 min read</div>
+        </div>
+
+        <div class="article-body">
+
+            <div class="callout">
+                <p>I explain AI for a living. As a Director of Technical Architects at Salesforce, my job is to take concepts that make engineers' eyes light up and translate them into language that makes executives say "now I get it." I do this in boardrooms, on sales calls, and in strategy sessions with Fortune 500 companies every week.</p>
+            </div>
+
+            <p>But the questions I get most often aren't in those meetings. They're at dinner parties. Family group chats. LinkedIn DMs from old college friends. The same questions keep coming up — smart questions that people feel dumb asking because the tech world moves so fast.</p>
+
+            <p>Nobody should feel embarrassed for not keeping up. The pace of AI right now is genuinely absurd. New models drop weekly. Terms like "agentic AI" and "vibe coding" appear overnight and suddenly everyone's using them like they've existed forever.</p>
+
+            <p>So here's my attempt to explain what's actually happening — the same way I'd explain it to a smart person who doesn't live in this world. No jargon. No hype. Just straight answers.</p>
+
+            <h2>1. LLMs 101: "What's the difference between ChatGPT, Claude, and those open-source things?"</h2>
+
+            <p>First, let's clear up some confusion: <strong>ChatGPT isn't an LLM.</strong> It's a chat interface. The LLM (Large Language Model) behind it is called GPT.</p>
+
+            <p><strong>What's an LLM?</strong> It's a massive neural network trained on vast amounts of text data. Think of it like a prediction engine — you give it text, it predicts what comes next. That's it. But when trained on the entire internet, books, code, and conversations, those predictions get eerily good at mimicking human language.</p>
+
+            <p><strong>The revolution started quietly.</strong> OpenAI released GPT-3 in 2020. Impressive, but mostly limited to developers and researchers. Then in November 2022, they wrapped GPT-3.5 in a simple chat interface and called it ChatGPT. It hit 100 million users in two months — the fastest product adoption in history at the time.</p>
+
+            <p><strong>That moment changed everything.</strong> Suddenly, AI wasn't a lab experiment. It was in your browser, answering questions, writing code, helping with homework. Google panicked and rushed out Bard (now Gemini). Anthropic launched Claude. Meta open-sourced Llama. Microsoft bet $13 billion on OpenAI. The AI arms race was on.</p>
+
+            <p><strong>Now here's where it gets confusing:</strong> When people say "ChatGPT," they usually mean the chat app. When they say "GPT-4," they mean the underlying model. Same with Claude (the chat app) vs. Claude Sonnet/Opus (the models). This matters because the model is the brain; the interface is just how you talk to it.</p>
+
+            <p>Let's use restaurants as an analogy.</p>
+
+            <p><strong>Foundation models (GPT, Claude, Gemini) = fine dining restaurants.</strong><br>
+            You don't see the kitchen. You don't know the recipes. You just order and trust the chef. These are proprietary models built by OpenAI, Anthropic, Google. They're powerful, polished, but you're at their mercy for pricing, availability, and features.</p>
+
+            <p><strong>Open-source models (Llama, Mistral, DeepSeek) = recipe books.</strong><br>
+            Meta, Mistral, and others release their models publicly. You can download them, modify them, run them yourself. The catch? You need the "kitchen" (powerful hardware) and the skills to cook. Great for developers, not for most users.</p>
+
+            <p><strong>Cloud vs. on-prem = delivery vs. home cooking.</strong></p>
+            <ul>
+                <li><strong>Cloud (ChatGPT, Claude):</strong> You pay per use. They handle the servers, the updates, the scaling. Easy, fast, but you're sending your data to them.</li>
+                <li><strong>On-prem (running Llama locally):</strong> You run the model on your own servers. Full control, full privacy, but you pay upfront for hardware and maintenance.</li>
+            </ul>
+
+            <p><strong>Why would anyone run AI locally?</strong><br>
+            Privacy, security, customization. If you're a hospital handling patient data or a bank processing transactions, you don't want your data leaving your building. That's where on-prem models shine.</p>
+
+            <h2>2. The Money Question: "How do these AI companies make billions if I use ChatGPT for free?"</h2>
+
+            <p>Think of AI companies like gyms.</p>
+
+            <p><strong>Free tier = day pass.</strong><br>
+            You can use ChatGPT for free, but there are limits. Slower responses, usage caps, no premium features. OpenAI is betting you'll eventually want more.</p>
+
+            <p><strong>Paid subscriptions = monthly membership.</strong><br>
+            ChatGPT Plus ($20/month) gets you faster models, more usage, early access to new features. Millions of people pay for this. That's billions in recurring revenue.</p>
+
+            <p><strong>Enterprise deals = corporate wellness programs.</strong><br>
+            Companies like Salesforce, Coca-Cola, and Morgan Stanley pay OpenAI millions to integrate AI into their workflows. Custom models, dedicated support, data privacy guarantees. This is where the real money is.</p>
+
+            <p><strong>API access = equipment rental.</strong><br>
+            Developers pay per use to build AI into their own apps. Every time you use an AI-powered app (Notion, Grammarly, Jasper), the company behind it is paying OpenAI or Anthropic per API call. At scale, that's massive revenue.</p>
+
+            <p><strong>The bottom line:</strong> Free users are the marketing. Paid users fund growth. Enterprise customers print money.</p>
+
+            <h2>3. Agents Explained: "Why are AI agents suddenly everywhere?"</h2>
+
+            <p>Here's the shift: <strong>ChatGPT is a conversation. AI agents are coworkers.</strong></p>
+
+            <p><strong>ChatGPT (AI assistant):</strong><br>
+            You ask, it answers. It's like texting a really smart person. But every conversation starts fresh. It can't remember what you talked about yesterday, and it can't DO anything beyond talking.</p>
+
+            <p><strong>AI agents:</strong><br>
+            They remember you, access your files, run commands, and execute tasks. It's like hiring an intern who actually gets stuff done.</p>
+
+            <p><strong>Three things agents need that assistants don't:</strong></p>
+
+            <p><strong>1. Memory.</strong><br>
+            Imagine hiring an assistant who forgets you every morning. Useless, right? Agents store context — your preferences, past conversations, project details — so they don't start from zero every time.</p>
+
+            <p><strong>2. Tools.</strong><br>
+            A coworker who can only talk isn't much help. Agents need tools: access to your calendar, ability to send emails, permission to run code, search the web, edit files. That's the difference between "tell me how to do it" and "I'll do it for you."</p>
+
+            <p><strong>3. Autonomy.</strong><br>
+            This is the big one. Traditional AI waits for your next instruction. Agents don't. You say "research competitor pricing and draft a report," then walk away. It figures out the steps, does the work, and pings you when it's done.</p>
+
+            <p><strong>Why people are obsessed with agents:</strong><br>
+            They're the first AI that feels like it actually works. They live on your computer, access your files, run your tools, and remember context. They're not just smarter — they're useful.</p>
+
+            <p>I know this because I built one. I run an autonomous AI agent on a $500 Mac Mini that monitors my infrastructure, sends me voice messages, runs security audits, and delivers a personalized morning briefing every day at 7am. It even rewrote its own scheduled tasks without being asked. That's what agentic AI actually looks like — not a demo, not a slide deck, but a system that works while you sleep.</p>
+
+            <h2>4. Vibe Coding: "Wait, developers aren't writing code anymore?"</h2>
+
+            <p>Let's unpack this.</p>
+
+            <p><strong>What "vibe coding" actually means:</strong></p>
+
+            <p>It's not "AI writes all the code and we hit publish." It's:</p>
+            <ol>
+                <li>Developer describes what they want ("build a feature that recommends playlists based on time of day")</li>
+                <li>AI generates the code</li>
+                <li>Developer reviews it, tests it, tweaks it, approves it</li>
+            </ol>
+
+            <p><strong>The analogy:</strong><br>
+            Before: You're a chef cooking from scratch.<br>
+            Now: You're a chef using a sous-chef who preps everything. You still decide the flavor, check the quality, plate the dish. But you're not chopping onions anymore.</p>
+
+            <p><strong>Does this mean developers are going away?</strong><br>
+            No. It means the job is evolving. Just like calculators didn't kill mathematicians, AI won't kill developers. It'll kill the boring parts — boilerplate code, repetitive tasks, syntax debugging.</p>
+
+            <p><strong>What changes:</strong></p>
+            <ul>
+                <li>Junior devs will need to learn how to "manage" AI code (review, test, integrate)</li>
+                <li>Senior devs will focus more on architecture, design, and strategy</li>
+                <li>Speed increases dramatically — what took weeks now takes days</li>
+            </ul>
+
+            <p><strong>Why this freaks people out:</strong><br>
+            Because it's happening fast. But here's the truth: tools always change how we work. The people who adapt win. The people who resist get left behind.</p>
+
+            <h2>5. The Bigger Picture: "So what actually matters here?"</h2>
+
+            <p>If you've read this far, forget the individual tools for a second. Here's what's actually happening:</p>
+
+            <p>For the first time, AI isn't just answering questions — it's doing work. Need to analyze 50 spreadsheets and generate a report? An agent can do it. Need to refactor an entire codebase? An agent can do it. Need to schedule 20 meetings based on availability across time zones? An agent can do it.</p>
+
+            <p>The shift from "AI that talks" to "AI that acts" is the real story of 2025-2026. And the companies, teams, and individuals who figure out how to work with agents — not just chatbots — will have an enormous advantage.</p>
+
+            <p><strong>The catch:</strong><br>
+            Giving AI access to your files, your commands, your system — that requires trust. Security, privacy, reliability. That's the next frontier. And it's why the companies building AI with safety and auditability at the core — not bolted on as an afterthought — are the ones I'm watching most closely.</p>
+
+            <div class="callout">
+                <p>Here's what I know after years of explaining AI to people who build businesses, not technology: the ones who thrive aren't the ones who understand every technical detail. They're the ones who understand enough to ask the right questions, make informed decisions, and not get sold something they don't need.</p>
+                <p style="margin-top: 16px;">If you read this and now understand the difference between a model and an interface, between a chatbot and an agent, between cloud and local — you're ahead of most people in most boardrooms.</p>
+            </div>
+
+            <p><strong>The questions to ask yourself:</strong></p>
+            <ul>
+                <li>What repetitive work am I doing that an AI agent could handle?</li>
+                <li>Am I evaluating AI tools based on hype or based on what my team actually needs?</li>
+                <li>Do I understand enough to push back when a vendor oversells?</li>
+            </ul>
+
+            <p>If you found this useful, share it with someone who's been too embarrassed to ask. That's how we close the gap — not with more jargon, but with fewer barriers to understanding.</p>
+
+            <div class="author-box">
+                <div class="author-info">
+                    <h4>Sandeep Aulakh</h4>
+                    <p>Director of Technical Architects at Salesforce, where he leads AI and Data Cloud adoption for Fortune 500 enterprises. He also builds autonomous AI systems on weekends — because understanding AI means building with it, not just talking about it.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Sandeep Aulakh &middot; NYC &middot; <a href="https://linkedin.com/in/aulakhsandeep">LinkedIn</a> &middot; <a href="https://github.com/aulakhs">GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>

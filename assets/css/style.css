@@ -216,10 +216,11 @@ body {
 }
 
 .article-body img {
-    max-width: 100%;
+    max-width: 75%;
     height: auto;
     border-radius: 8px;
-    margin: 24px 0;
+    margin: 24px auto;
+    display: block;
 }
 
 .article-body .callout {

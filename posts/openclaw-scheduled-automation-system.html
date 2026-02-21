@@ -53,43 +53,14 @@
   <li>Notifications go out on failure. Most success paths stay silent.</li>
 </ul>
 
-<p><em>Look at the diagram above—this is the mental model.</em></p>
 <p><img src="../assets/images/openclaw-automations-and-tasks.png" alt="High-level workflow map showing task buckets feeding a central cron-log database and failure notifications"></p>
 <p><em>Caption: High-level architecture. Task buckets feed a Central Cron-Log DB, and failures route to notifications.</em></p>
 
 <h2>My actual schedule (what runs when)</h2>
-<p><em>Look at the schedule diagram above—this is the operational cadence.</em></p>
 <p><img src="../assets/images/openclaw-details-schedule.png" alt="Detailed ET schedule for overnight, daytime, weekly-monthly, and hourly backup workflows"></p>
 <p><em>Caption: Detailed schedule in ET, including overnight, daytime, weekly/monthly, and hourly backup workflows.</em></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Task name</th>
-      <th>Frequency</th>
-      <th>Time(s) (ET)</th>
-      <th>Purpose (1 line)</th>
-      <th>What happens on failure (1 line)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>Security Nightly Review</td><td>Daily</td><td>2:30 AM</td><td>Run nightly security checks.</td><td>Logged and eligible for alerting.</td></tr>
-    <tr><td>Repo Size Monitor</td><td>Daily</td><td>5:15 AM</td><td>Track repository growth.</td><td>Failure recorded in cron/log state.</td></tr>
-    <tr><td>Morning Briefing with AI News</td><td>Daily</td><td>7:00 AM</td><td>Generate morning summary.</td><td>Error captured with run metadata.</td></tr>
-    <tr><td>Health Check</td><td>Hourly</td><td>Every hour</td><td>Continuous system sanity check.</td><td>Retries/errors tracked over time.</td></tr>
-    <tr><td>News Briefing</td><td>4x daily</td><td>8:00 AM, 12:00 PM, 4:00 PM, 8:00 PM</td><td>Keep an AI/news pulse.</td><td>Timeout/error logged and visible.</td></tr>
-    <tr><td>Daily Status Digest</td><td>Daily</td><td>9:00 AM</td><td>Summarize daily system state.</td><td>Logged; alert path handles failures.</td></tr>
-    <tr><td>Job Monitor</td><td>2x daily</td><td>9:00 AM, 5:00 PM</td><td>Check role postings on cadence.</td><td>Failures tracked with retries.</td></tr>
-    <tr><td>Afternoon Briefing</td><td>Daily</td><td>1:00 PM</td><td>Midday status check-in.</td><td>Failure enters logs + alert flow.</td></tr>
-    <tr><td>Evening Briefing</td><td>Daily</td><td>7:00 PM</td><td>End-of-day wrap-up.</td><td>Error retained with next run info.</td></tr>
-    <tr><td>API Spend Check</td><td>Daily</td><td>11:00 PM</td><td>Track daily API usage/cost.</td><td>Failure visible in daily state.</td></tr>
-    <tr><td>Tuesday Content Prep</td><td>Weekly</td><td>Monday 8:00 PM</td><td>Prepare Tuesday draft content.</td><td>Status/error captured for follow-up.</td></tr>
-    <tr><td>Thursday Content Prep</td><td>Weekly</td><td>Wednesday 8:00 PM</td><td>Prepare Thursday draft content.</td><td>Status/error captured for follow-up.</td></tr>
-    <tr><td>Security Weekly Gateway Verify</td><td>Weekly</td><td>Sunday 3:00 AM</td><td>Weekly gateway security verification.</td><td>Failure logged with next run retained.</td></tr>
-    <tr><td>Security Memory Scan</td><td>Monthly</td><td>1st day, 4:00 AM</td><td>Monthly security-oriented memory scan.</td><td>Failure retained in monthly trail.</td></tr>
-    <tr><td>Git Auto-Sync / Backup</td><td>Hourly</td><td>Every hour (:00)</td><td>Commit/tag/push workspace state.</td><td>Conflicts fail safe; no force-resolve.</td></tr>
-  </tbody>
-</table>
+
 
 <p><em>Look at the table and schedule together—this is where ambiguity disappears.</em></p>
 
@@ -160,7 +131,7 @@
   <li>Never back up secrets in plaintext.</li>
 </ul>
 
-<h2>What I learned after ~1.5 weeks</h2>
+<h2>What I learned after 2 weeks</h2>
 <ul>
   <li>Cadence beats complexity.</li>
   <li>Logs are product. If they’re messy, operations feel broken.</li>

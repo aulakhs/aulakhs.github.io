@@ -224,11 +224,12 @@ body {
 }
 
 .article-body .image-caption {
-    font-size: 0.85em;
+    font-size: 0.78em;
     color: #666;
     text-align: center;
-    margin: 0 auto 24px;
-    line-height: 1.45;
+    width: 75%;
+    margin: 2px auto 22px;
+    line-height: 1.35;
 }
 
 .article-body .image-caption em {

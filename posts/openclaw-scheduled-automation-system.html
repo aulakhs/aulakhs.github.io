@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Laptop Agent Needed a Schedule — Sandeep Aulakh</title>
+    <meta name="description" content="How I organized OpenClaw automations on my laptop with a central cron-log model, failure alerts, and safe backups.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="/" class="site-title">Sandeep Aulakh</a>
+            <nav class="site-nav">
+                <a href="/">Writing</a>
+                <a href="https://linkedin.com/in/aulakhsandeep" target="_blank">LinkedIn</a>
+                <a href="https://github.com/aulakhs" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="article-header">
+            <h1>My Laptop Agent Needed a Schedule</h1>
+            <div class="post-meta">February 21, 2026 &middot; 8 min read</div>
+        </div>
+
+        <div class="article-body">
+
+            <p>I’ve been running OpenClaw on my laptop for about a week and a half. It’s been useful, but I hit a practical problem quickly: as the number of automations grew, I lost a clean view of what was running, when it was running, and what failed versus what quietly succeeded.</p>
+
+<p>This post is a simple build log: what I set up, why it helped, and the schedule I’m actually using.</p>
+
+<h2>Why I needed a schedule (the “no glue” problem)</h2>
+<p>I was feeding OpenClaw a lot of information over time, but I didn’t have any “glue” to track what I already gave it, what was running when, and what the system was doing day-to-day. I wanted a simple visual way to answer: What runs daily vs nightly vs weekly? How often do things run? What happens when something fails? Where do logs/status live? How do I keep backups safe?</p>
+
+<p>The issue wasn’t model capability. It was coordination.</p>
+
+<ul>
+  <li>I’d forget whether a task already existed in automation.</li>
+  <li>I’d rerun things manually just to be safe.</li>
+  <li>Failures were easy to miss unless I was actively watching logs.</li>
+  <li>There was no dependable cadence.</li>
+</ul>
+
+<h2>The mental model</h2>
+<p>The system is intentionally simple:</p>
+<p><strong>Task buckets → Central Cron-Log DB → Notification Layer (on failure)</strong></p>
+
+<ul>
+  <li>Task buckets are grouped by timing (overnight, day, weekly/monthly, backups).</li>
+  <li>A central cron-log layer records what should run, what did run, and what broke.</li>
+  <li>Notifications go out on failure. Most success paths stay silent.</li>
+</ul>
+
+<p><em>Look at the diagram above—this is the mental model.</em></p>
+<p><img src="../assets/images/openclaw-automations-and-tasks.png" alt="High-level workflow map showing task buckets feeding a central cron-log database and failure notifications"></p>
+<p><em>Caption: High-level architecture. Task buckets feed a Central Cron-Log DB, and failures route to notifications.</em></p>
+
+<h2>My actual schedule (what runs when)</h2>
+<p><em>Look at the schedule diagram above—this is the operational cadence.</em></p>
+<p><img src="../assets/images/openclaw-details-schedule.png" alt="Detailed ET schedule for overnight, daytime, weekly-monthly, and hourly backup workflows"></p>
+<p><em>Caption: Detailed schedule in ET, including overnight, daytime, weekly/monthly, and hourly backup workflows.</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Task name</th>
+      <th>Frequency</th>
+      <th>Time(s) (ET)</th>
+      <th>Purpose (1 line)</th>
+      <th>What happens on failure (1 line)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Security Nightly Review</td><td>Daily</td><td>2:30 AM</td><td>Run nightly security checks.</td><td>Logged and eligible for alerting.</td></tr>
+    <tr><td>Repo Size Monitor</td><td>Daily</td><td>5:15 AM</td><td>Track repository growth.</td><td>Failure recorded in cron/log state.</td></tr>
+    <tr><td>Morning Briefing with AI News</td><td>Daily</td><td>7:00 AM</td><td>Generate morning summary.</td><td>Error captured with run metadata.</td></tr>
+    <tr><td>Health Check</td><td>Hourly</td><td>Every hour</td><td>Continuous system sanity check.</td><td>Retries/errors tracked over time.</td></tr>
+    <tr><td>News Briefing</td><td>4x daily</td><td>8:00 AM, 12:00 PM, 4:00 PM, 8:00 PM</td><td>Keep an AI/news pulse.</td><td>Timeout/error logged and visible.</td></tr>
+    <tr><td>Daily Status Digest</td><td>Daily</td><td>9:00 AM</td><td>Summarize daily system state.</td><td>Logged; alert path handles failures.</td></tr>
+    <tr><td>Job Monitor</td><td>2x daily</td><td>9:00 AM, 5:00 PM</td><td>Check role postings on cadence.</td><td>Failures tracked with retries.</td></tr>
+    <tr><td>Afternoon Briefing</td><td>Daily</td><td>1:00 PM</td><td>Midday status check-in.</td><td>Failure enters logs + alert flow.</td></tr>
+    <tr><td>Evening Briefing</td><td>Daily</td><td>7:00 PM</td><td>End-of-day wrap-up.</td><td>Error retained with next run info.</td></tr>
+    <tr><td>API Spend Check</td><td>Daily</td><td>11:00 PM</td><td>Track daily API usage/cost.</td><td>Failure visible in daily state.</td></tr>
+    <tr><td>Tuesday Content Prep</td><td>Weekly</td><td>Monday 8:00 PM</td><td>Prepare Tuesday draft content.</td><td>Status/error captured for follow-up.</td></tr>
+    <tr><td>Thursday Content Prep</td><td>Weekly</td><td>Wednesday 8:00 PM</td><td>Prepare Thursday draft content.</td><td>Status/error captured for follow-up.</td></tr>
+    <tr><td>Security Weekly Gateway Verify</td><td>Weekly</td><td>Sunday 3:00 AM</td><td>Weekly gateway security verification.</td><td>Failure logged with next run retained.</td></tr>
+    <tr><td>Security Memory Scan</td><td>Monthly</td><td>1st day, 4:00 AM</td><td>Monthly security-oriented memory scan.</td><td>Failure retained in monthly trail.</td></tr>
+    <tr><td>Git Auto-Sync / Backup</td><td>Hourly</td><td>Every hour (:00)</td><td>Commit/tag/push workspace state.</td><td>Conflicts fail safe; no force-resolve.</td></tr>
+  </tbody>
+</table>
+
+<p><em>Look at the table and schedule together—this is where ambiguity disappears.</em></p>
+
+<h2>Central Cron-Log DB: the “single source of truth”</h2>
+<p>This is the part that made the whole setup calmer.</p>
+<p>It consolidates:</p>
+<ul>
+  <li><code>~/.openclaw/cron/jobs.json</code></li>
+  <li><code>crontab -l</code></li>
+  <li>OpenClaw logs</li>
+</ul>
+
+<p>It tracks:</p>
+<ul>
+  <li>next run</li>
+  <li>last run</li>
+  <li>status</li>
+  <li>errors</li>
+  <li>retries/backoff</li>
+</ul>
+
+<div class="callout"><p><strong>Rules I follow:</strong> don’t log secrets, and keep logs lean enough to debug without creating noise.</p></div>
+
+<pre><code>{
+  "jobId": "morning-briefing",
+  "schedule": "0 7 * * *",
+  "tz": "America/New_York",
+  "state": {
+    "nextRunAt": "2026-02-22T12:00:00Z",
+    "lastRunAt": "2026-02-21T12:00:03Z",
+    "lastStatus": "ok",
+    "consecutiveErrors": 0,
+    "lastError": null
+  }
+}
+</code></pre>
+
+<pre><code>2026-02-21T12:00:03Z job=morning-briefing status=ok durationMs=41234
+2026-02-21T13:00:02Z job=health-check status=error error="timeout" retry=1 nextRun=2026-02-21T14:00:00Z
+</code></pre>
+
+<h2>Failure handling + notifications</h2>
+<p>Operating philosophy: <strong>fail loud, succeed quiet</strong>.</p>
+<p>Success shouldn’t spam. Failures should contain enough context to act quickly via Telegram/Email.</p>
+
+<p>A useful failure alert should include:</p>
+<ul>
+  <li>job name</li>
+  <li>last run timestamp</li>
+  <li>error summary</li>
+  <li>retry count</li>
+  <li>next step (retrying vs manual action)</li>
+</ul>
+
+<h2>Backups: Git auto-sync + local DB snapshots</h2>
+<p>I use two backup layers:</p>
+<ol>
+  <li><strong>Hourly Git Auto-Sync / Backup</strong> for versioned workspace artifacts.</li>
+  <li><strong>Local on-device backups</strong> for some databases I’ve put together.</li>
+</ol>
+
+<p>Why both? Git gives recoverable config/file history. Local DB snapshots give data-level restore points.</p>
+
+<p>Safety tips:</p>
+<ul>
+  <li>Rotate old backups.</li>
+  <li>Keep backup paths consistent and documented.</li>
+  <li>Never back up secrets in plaintext.</li>
+</ul>
+
+<h2>What I learned after ~1.5 weeks</h2>
+<ul>
+  <li>Cadence beats complexity.</li>
+  <li>Logs are product. If they’re messy, operations feel broken.</li>
+  <li>Boring schedules are good schedules.</li>
+  <li>Failure paths need more design than success paths.</li>
+  <li>One source of truth dramatically reduces context switching.</li>
+  <li>Silence is a feature. Success spam creates alert fatigue.</li>
+  <li>Backups need intentional restore strategy, not just storage.</li>
+</ul>
+
+<h2>What I’m adding next</h2>
+<ul>
+  <li>Better run-history dashboard</li>
+  <li>Weekly rollup summary (ran/failed/flaky)</li>
+  <li>Job tagging/grouping improvements</li>
+  <li>Runtime metrics (durations, timeout hotspots)</li>
+  <li>Clearer alert templates with explicit next actions</li>
+</ul>
+
+<h2>Appendix: Full schedule (copy/paste friendly)</h2>
+<h3>Overnight</h3>
+<ul>
+  <li>2:30 AM — Security Nightly Review</li>
+  <li>5:15 AM — Repo Size Monitor</li>
+  <li>7:00 AM — Morning Briefing with AI News</li>
+</ul>
+
+<h3>During the Day</h3>
+<ul>
+  <li>Hourly — Health Check</li>
+  <li>8:00 AM / 12:00 PM / 4:00 PM / 8:00 PM — News Briefing</li>
+  <li>9:00 AM — Daily Status Digest</li>
+  <li>9:00 AM + 5:00 PM — Job Monitor</li>
+  <li>1:00 PM — Afternoon Briefing</li>
+  <li>7:00 PM — Evening Briefing</li>
+  <li>11:00 PM — API Spend Check</li>
+  <li>Monday 8:00 PM — Tuesday Content Prep</li>
+  <li>Wednesday 8:00 PM — Thursday Content Prep</li>
+</ul>
+
+<h3>Weekly / Monthly</h3>
+<ul>
+  <li>Sunday 3:00 AM — Security Weekly Gateway Verify</li>
+  <li>Monthly (1st day, 4:00 AM) — Security Memory Scan</li>
+</ul>
+
+<h3>Backups</h3>
+<ul>
+  <li>Every hour (:00) — Git Auto-Sync / Backup</li>
+  <li>I also do local on-device backups for some databases I’ve put together.</li>
+</ul>
+
+
+            <div class="author-box">
+                <div class="author-info">
+                    <h4>Sandeep Aulakh</h4>
+                    <p>Director of Technical Architects at Salesforce, where he leads AI and Data Cloud adoption for Fortune 500 enterprises. When he's not explaining technology, you'll find him tinkering with new tools, running, rowing, or trying yet another type of coffee.</p>
+                    <p>He writes about enterprise AI, building with agents, and what actually works vs. what just demos well. Find him on <a href="https://linkedin.com/in/aulakhsandeep" target="_blank">LinkedIn</a>.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Sandeep Aulakh &middot; NYC &middot; <a href="https://linkedin.com/in/aulakhsandeep">LinkedIn</a> &middot; <a href="https://github.com/aulakhs">GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -219,8 +219,20 @@ body {
     max-width: 75%;
     height: auto;
     border-radius: 8px;
-    margin: 24px auto;
+    margin: 24px auto 8px;
     display: block;
+}
+
+.article-body .image-caption {
+    font-size: 0.85em;
+    color: #666;
+    text-align: center;
+    margin: 0 auto 24px;
+    line-height: 1.45;
+}
+
+.article-body .image-caption em {
+    font-style: normal;
 }
 
 .article-body .callout {

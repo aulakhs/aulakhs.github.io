@@ -1,407 +1,679 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hermes Starter Pack: Build Your Own Personal AI Operating System — Sandeep Aulakh</title>
-    <meta name="description" content="A practical starter pack for turning a fresh Hermes Agent install into a personal assistant with memory, skills, scheduled jobs, Telegram access, and a local knowledge base.">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <style>
-        .starter-hero {
-            padding: 48px 0 32px;
-            border-bottom: 3px solid var(--accent);
-            margin-bottom: 32px;
-        }
-        .starter-eyebrow {
-            color: var(--accent);
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-        .starter-hero h1 {
-            color: var(--text);
-            font-size: 2.35rem;
-            line-height: 1.15;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-        .starter-hero p {
-            color: var(--text-secondary);
-            font-size: 1.12rem;
-            line-height: 1.7;
-            max-width: 640px;
-            margin-bottom: 0;
-        }
-        .quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-            margin: 28px 0 8px;
-        }
-        .quick-links a {
-            display: block;
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            text-decoration: none;
-            background: var(--bg-subtle);
-            font-weight: 600;
-            line-height: 1.35;
-        }
-        .quick-links a span {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 0.86rem;
-            font-weight: 400;
-            margin-top: 3px;
-        }
-        .prompt-card {
-            margin: 28px 0;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            overflow: hidden;
-            background: #fff;
-        }
-        .prompt-card-header {
-            padding: 18px 20px;
-            background: var(--bg-subtle);
-            border-bottom: 1px solid var(--border);
-        }
-        .prompt-card-header h3 {
-            margin: 0 0 4px;
-            font-size: 1.15rem;
-        }
-        .prompt-card-header p {
-            margin: 0;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        pre {
-            margin: 0;
-            padding: 20px;
-            overflow-x: auto;
-            background: #0f172a;
-            color: #e5e7eb;
-            font-size: 0.88rem;
-            line-height: 1.55;
-        }
-        code {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-        }
-        .article-body p code, .article-body li code {
-            background: var(--bg-subtle);
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            padding: 1px 5px;
-            font-size: 0.9em;
-        }
-        .doctrine {
-            padding: 22px 24px;
-            border-radius: 14px;
-            background: #f6f9ff;
-            border: 1px solid #dbeafe;
-            margin: 30px 0;
-        }
-        .doctrine h2 {
-            margin-top: 0;
-        }
-        .copy-note {
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-            margin-top: -8px;
-        }
-        @media (max-width: 768px) {
-            .starter-hero h1 { font-size: 1.85rem; }
-            .quick-links { grid-template-columns: 1fr; }
-            pre { font-size: 0.8rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes Starter Pack | Sandeep Aulakh</title>
+  <meta name="description" content="A paste-ready prompt pack for turning a fresh Hermes Agent install into a personal operating assistant with skills, memory, briefings, scheduled jobs, and self-improvement loops.">
+  <meta property="og:title" content="Hermes Agent Bootstrap Prompts">
+  <meta property="og:description" content="Paste-ready prompts for building a personal Hermes Agent setup: memory, skills, briefings, content jobs, job monitoring, and self-improvement.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://aulakhs.github.io/posts/hermes-starter-pack.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #08090a;
+      --panel: rgba(255,255,255,0.035);
+      --panel-strong: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.09);
+      --border-soft: rgba(255,255,255,0.055);
+      --text: #f7f8f8;
+      --muted: #a4abb7;
+      --dim: #707783;
+      --accent: #7170ff;
+      --accent-2: #9b8cff;
+      --green: #10b981;
+      --code: #0f1011;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 0%, rgba(113,112,255,0.20), transparent 32rem),
+        radial-gradient(circle at 80% 10%, rgba(16,185,129,0.10), transparent 28rem),
+        var(--bg);
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-feature-settings: "cv01", "ss03";
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(8,9,10,0.76);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .site-nav { display: flex; gap: 18px; color: var(--muted); font-size: 14px; }
+    .site-nav a { text-decoration: none; }
+    .site-nav a:hover { color: var(--text); }
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 84px 24px 40px;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.035);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px var(--green); }
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      margin: 0 0 24px;
+      max-width: 900px;
+      font-weight: 600;
+    }
+    .lede {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(18px, 2.1vw, 22px);
+      line-height: 1.55;
+      margin: 0 0 30px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 510;
+      font-size: 14px;
+    }
+    .button.primary { background: var(--accent); border-color: transparent; }
+    .button:hover { background: rgba(255,255,255,0.07); }
+    .button.primary:hover { background: #828fff; }
+    .layout {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+      display: grid;
+      grid-template-columns: 280px minmax(0,1fr);
+      gap: 28px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.025);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .toc h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin: 4px 8px 12px; }
+    .toc a {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 9px 8px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+    .toc a span { color: var(--accent-2); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+    .toc a:hover { background: rgba(255,255,255,0.045); color: var(--text); }
+    .intro-panel, .prompt-card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.026));
+      border-radius: 18px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.30);
+    }
+    .intro-panel { padding: 28px; margin-bottom: 20px; }
+    .intro-panel h2 { margin: 0 0 12px; font-size: 26px; letter-spacing: -0.03em; }
+    .intro-panel p { color: var(--muted); margin: 0 0 14px; }
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+    .principle { background: rgba(255,255,255,0.035); border: 1px solid var(--border-soft); border-radius: 12px; padding: 14px; color: var(--muted); font-size: 14px; }
+    .principle strong { display:block; color: var(--text); margin-bottom: 4px; }
+    .prompt-card { margin: 18px 0; overflow: hidden; scroll-margin-top: 96px; }
+    .prompt-head {
+      padding: 22px 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .eyebrow { font-family: 'JetBrains Mono', monospace; color: var(--accent-2); font-size: 12px; margin-bottom: 6px; }
+    .prompt-head h2 { margin: 0; font-size: 24px; line-height: 1.16; letter-spacing: -0.03em; }
+    .copy-btn {
+      align-self: start;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      background: rgba(255,255,255,0.045);
+      padding: 9px 11px;
+      font: 500 13px 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.08); }
+    pre {
+      margin: 0;
+      padding: 22px;
+      overflow-x: auto;
+      background: rgba(0,0,0,0.28);
+    }
+    code {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.62;
+      color: #e7e9ee;
+      white-space: pre-wrap;
+    }
+    .footer { border-top: 1px solid var(--border-soft); color: var(--dim); padding: 28px 24px; text-align:center; font-size: 13px; }
+    @media (max-width: 920px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: relative; top: 0; }
+      .principles { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .site-nav { flex-wrap: wrap; }
+      .hero { padding-top: 56px; }
+      .prompt-head { flex-direction: column; }
+      .copy-btn { align-self: stretch; }
+    }
+  </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="/" class="site-title">Sandeep Aulakh</a>
-            <nav class="site-nav">
-                <a href="/">Writing</a>
-                <a href="https://linkedin.com/in/aulakhsandeep" target="_blank">LinkedIn</a>
-                <a href="https://github.com/aulakhs" target="_blank">GitHub</a>
-            </nav>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">Sandeep Aulakh</a>
+      <nav class="site-nav">
+        <a href="/">Writing</a>
+        <a href="#prompts">Prompts</a>
+        <a href="https://hermes-agent.nousresearch.com/docs/" target="_blank" rel="noopener">Hermes docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="kicker"><span class="dot"></span> Hermes Agent starter kit</div>
+      <h1>Prompts for turning a fresh Hermes install into a personal operating assistant.</h1>
+      <p class="lede">A practical sequence your agent can run: memory, private knowledge base, reusable skills, morning/evening briefings, content prep, job monitoring, maintenance jobs, and a self-improvement loop.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#prompt-1">Start with Prompt 1</a>
+        <a class="button" href="#optional">Use the single bootstrap prompt</a>
+      </div>
+    </section>
+
+    <div class="layout" id="prompts">
+      <aside class="toc" aria-label="Prompt list">
+        <h2>Prompt sequence</h2>
+        <a href="#prompt-1"><span>01</span>Personal assistant baseline</a><a href="#prompt-2"><span>02</span>Create a private knowledge base</a><a href="#prompt-3"><span>03</span>Create a memory-system skill</a><a href="#prompt-4"><span>04</span>Daily briefing skill + scheduled morning briefing</a><a href="#prompt-5"><span>05</span>Evening change-only briefing</a><a href="#prompt-6"><span>06</span>Content writing skill</a><a href="#prompt-7"><span>07</span>Weekly content prep scheduled jobs</a><a href="#prompt-8"><span>08</span>Job market monitoring skill + cron</a><a href="#prompt-9"><span>09</span>System health, backup, and spend monitoring</a><a href="#prompt-10"><span>10</span>Self-improvement system</a><a href="#prompt-11"><span>11</span>Personal article / URL knowledge base</a><a href="#prompt-12"><span>12</span>Final audit and cleanup</a><a href="#optional"><span>Optional</span>single bootstrap prompt if your friend wants one long request</a>
+      </aside>
+
+      <div>
+        <section class="intro-panel">
+          <h2>How to use this</h2>
+          <p>Paste the prompts into your own Hermes agent in order. Replace bracketed placeholders before sending. Skip anything you do not need.</p>
+          <p>The shape is intentionally incremental: first establish identity and memory, then add skills, then schedule low-noise jobs.</p>
+          <div class="principles">
+            <div class="principle"><strong>Keep it private</strong>Do not paste secrets, OAuth codes, API keys, cookies, or private client data.</div>
+            <div class="principle"><strong>Prefer low-noise jobs</strong>Routine scripts should stay silent unless something actually needs attention.</div>
+            <div class="principle"><strong>Verify everything</strong>Every created skill, file, script, and cron job should be checked before moving on.</div>
+          </div>
+        </section>
+
+      <section class="prompt-card" id="prompt-1">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 1</div>
+            <h2>Personal assistant baseline</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-1-code">Copy prompt</button>
         </div>
-    </header>
+        <pre><code id="prompt-1-code">I just installed Hermes. Help me turn it into my personal operating assistant.
 
-    <main class="container">
-        <article>
-            <header class="starter-hero">
-                <div class="starter-eyebrow">Hermes Agent Starter Pack</div>
-                <h1>Build Your Own Personal AI Operating System</h1>
-                <p>A practical set of instructions and copy/paste prompts for turning a fresh Hermes install into a useful personal assistant: memory, skills, scheduled agents, Telegram access, project workflows, and a local knowledge base.</p>
-                <div class="quick-links">
-                    <a href="https://github.com/NousResearch/hermes-agent" target="_blank">Hermes GitHub <span>Source repo and installation script</span></a>
-                    <a href="https://hermes-agent.nousresearch.com/docs" target="_blank">Hermes Docs <span>Setup, tools, gateway, cron, skills</span></a>
-                </div>
-                <div class="post-meta">May 15, 2026 &middot; starter guide</div>
-            </header>
+First, inspect my Hermes setup and local environment safely:
+- run `hermes doctor` if available
+- inspect `~/.hermes/config.yaml` without exposing secrets
+- inspect available toolsets and skills
+- check whether memory, skills, cron, gateway, terminal, file tools, web tools, and messaging are available
 
-            <div class="article-body">
-                <p>If you just installed Hermes for the first time, do not start by copying someone else’s full setup. Copy the pattern instead: durable memory, a local knowledge base, reusable skills, scheduled jobs, messaging access, and small deterministic scripts for anything repetitive.</p>
+Then create or update my personal assistant context so future sessions know how to help me.
 
-                <h2>Install Hermes</h2>
-                <div class="prompt-card">
-                    <pre><code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
-hermes setup
-hermes doctor</code></pre>
-                </div>
-                <p>After setup, start Hermes with:</p>
-                <div class="prompt-card">
-                    <pre><code>hermes</code></pre>
-                </div>
-                <p class="copy-note">Then paste the prompts below one by one.</p>
+My details:
+- Name: [FULL NAME]
+- What to call me: [PREFERRED NAME]
+- Timezone: [TIMEZONE, e.g. America/New_York]
+- Location: [CITY/REGION]
+- Email: [EMAIL]
+- Role/career context: [ROLE, TARGET ROLE, INDUSTRY]
+- Current goals: [GOALS]
+- Communication style: [e.g. concise, opinionated, no corporate filler]
+- Things I want help with regularly: [briefings, job search, content, research, coding, admin]
 
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>1. Bootstrap your personal context</h3>
-                        <p>Use this first so Hermes learns who you are and how to work with you.</p>
-                    </div>
-                    <pre><code>Help me turn this Hermes install into my personal assistant.
+Create a concise durable memory/profile from this. Do not store secrets. If a file-based knowledge base would help, propose a simple `~/knowledge/` structure and create it only after showing me the plan.</code></pre>
+      </section>
 
-First, ask me for:
-1. My name, location, timezone, email, and preferred communication style.
-2. My work/career goals.
-3. My recurring tasks.
-4. The tools I use daily.
-5. What kinds of things I want you to remember.
-6. What I do NOT want automated without explicit confirmation.
+      <section class="prompt-card" id="prompt-2">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 2</div>
+            <h2>Create a private knowledge base</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-2-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-2-code">Build me a lightweight private knowledge base modeled on a personal operating system.
 
-Then create a compact user profile and save durable preferences to memory. Keep it concise and useful; do not save temporary task state.</code></pre>
-                </div>
+Create a `~/knowledge/` directory with these sections:
+- `identity/` for who I am, preferences, career goals, writing voice
+- `memory/` for long-term memory, decisions, and interaction patterns
+- `intel/` for current research/news/job/content intelligence
+- `skills/` for recurring workflows written in plain English
+- `tools/` for local tool inventory and commands
+- `config/` for architecture, integrations, and scheduled jobs
+- `projects/` for durable project notes
 
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>2. Build a local knowledge base</h3>
-                        <p>A filesystem knowledge base is portable across agents and easy to back up.</p>
-                    </div>
-                    <pre><code>Create a local knowledge base for me under ~/knowledge with this structure:
+Populate starter files from what you know about me so far:
+- `identity/about.md`
+- `identity/preferences.md`
+- `identity/career.md`
+- `memory/long-term.md`
+- `memory/decisions.md`
+- `memory/interactions.md`
+- `intel/latest.md`
+- `tools/inventory.md`
+- `config/architecture.md`
+- `config/integrations.md`
 
-- identity/
-  - about.md
-  - preferences.md
-  - career.md
-- memory/
-  - long-term.md
-  - decisions.md
-- intel/
-  - latest.md
-- skills/
-  - briefing.md
-  - content-creation.md
-  - job-search.md
-- tools/
-  - inventory.md
-- config/
-  - architecture.md
+Rules:
+- Keep it private and local.
+- Do not write secrets.
+- Use placeholders where information is missing.
+- At the end, summarize what you created and what questions I should answer next to improve it.</code></pre>
+      </section>
 
-Ask me the minimum questions needed, then create the files with useful starter content. Make the knowledge base vendor-agnostic so any AI agent can read it later.</code></pre>
-                </div>
+      <section class="prompt-card" id="prompt-3">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 3</div>
+            <h2>Create a memory-system skill</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-3-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-3-code">Create a reusable Hermes skill called `memory-system` for maintaining my private file-based memory system.
 
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>3. Create reusable skills</h3>
-                        <p>Skills are the compounding layer: reusable operating procedures Hermes can load when a task matches.</p>
-                    </div>
-                    <pre><code>Help me create my first Hermes skills.
+The skill should cover:
+- when to append daily notes vs update curated long-term memory
+- directory layout under `~/knowledge/`
+- privacy rules: never store secrets, credentials, OAuth codes, tokens, private client data, or raw sensitive messages
+- daily note format
+- how to synthesize repeated patterns into `~/knowledge/memory/long-term.md`
+- how to update `identity/preferences.md` when I correct style or workflow preferences
+- verification checklist
 
-I want skills for:
-1. Daily briefing
-2. Job search monitoring
-3. Content drafting
-4. Personal research
-5. Project/code work
+Use Hermes skill conventions: YAML frontmatter, Overview, When to Use, workflow steps, pitfalls, verification checklist.
+Create it as a user-local skill under `~/.hermes/skills/note-taking/memory-system/SKILL.md` unless an existing equivalent skill already exists. If one exists, improve it instead of duplicating it.</code></pre>
+      </section>
 
-For each skill:
-- Ask what my preferred workflow is.
-- Create a clear SKILL.md with trigger conditions, steps, commands, quality bar, and verification.
-- Keep secrets out of the skill.
-- Save the skills in the right Hermes skills directory.
-- Then show me how to list and load them.</code></pre>
-                </div>
+      <section class="prompt-card" id="prompt-4">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 4</div>
+            <h2>Daily briefing skill + scheduled morning briefing</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-4-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-4-code">Set up a daily morning briefing system for me.
 
-                <p>Useful skill commands:</p>
-                <div class="prompt-card">
-                    <pre><code>hermes skills list
-hermes skills search briefing
-hermes skills install &lt;skill-id&gt;
-hermes -s &lt;skill-name&gt;</code></pre>
-                </div>
+First ask me for any missing details that materially change the setup, especially:
+- preferred delivery channel: Telegram, email, Slack, CLI/local only
+- preferred briefing time and timezone
+- location for weather
+- whether Gmail/Calendar access is configured or should be skipped
+- topics I care about: [AI, career, company watchlist, markets, sports, etc.]
 
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>4. Make Hermes available from Telegram or chat</h3>
-                        <p>Gateway mode gives you ambient access to the same local agent from messaging platforms.</p>
-                    </div>
-                    <pre><code>hermes gateway setup
-hermes gateway install
-hermes gateway start
-hermes gateway status</code></pre>
-                </div>
+Then create a reusable skill called `briefing` that defines how to compile my daily briefing.
 
-                <p>Then message the bot in Telegram:</p>
-                <div class="prompt-card">
-                    <pre><code>/sethome</code></pre>
-                </div>
+Default briefing sections:
+- weather for my location
+- calendar today/tomorrow, if available
+- important unread email, if available
+- system/Hermes health issues only if notable
+- relevant news/intel, focused on my stated interests
+- 1-3 recommended actions for the day
 
-                <p>Prompt Hermes to set expectations for chat behavior:</p>
-                <div class="prompt-card">
-                    <pre><code>I want you to be my personal assistant over Telegram.
+Quality rules:
+- concise, useful, not noisy
+- do not repeat yesterday&#x27;s unchanged news
+- cite links when using web sources
+- if nothing meaningful changed, send a short no-change note or stay silent if this is a scheduled job and silence is supported
 
-Set expectations:
-- Be concise.
-- Use tools before asking me to repeat information.
-- Do not send emails, post publicly, or message other people without explicit approval.
-- For scheduled jobs, deliver results here.
-- If something fails in a background job, proactively tell me with error details and next action.</code></pre>
-                </div>
+After creating the skill, create a Hermes cron job for the briefing using the cronjob tool or `hermes cron`.
+Use a smaller/cheaper model for routine daily runs if my config supports it.
+Set `enabled_toolsets` narrowly: usually terminal,file,web, plus messaging only if needed.
+Verify the job appears in `hermes cron list`.</code></pre>
+      </section>
 
-                <p>Messaging docs: <a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging/" target="_blank">Hermes messaging platform guide</a>.</p>
-
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>5. Create scheduled agents and cron jobs</h3>
-                        <p>Use cron for work that should happen without you prompting every time.</p>
-                    </div>
-                    <pre><code>Create a daily morning briefing job for me.
-
-Schedule: every weekday at 7:30am local time.
-
-Include:
-- Weather
-- Calendar
-- Important unread email summary
-- Relevant news for my work
-- Any urgent system or task reminders
-- One recommended action for the day
-
-Make it concise but useful. Deliver to my home Telegram channel. Use a cheaper/faster model unless the work needs deep reasoning.</code></pre>
-                </div>
-
-                <p>Useful cron commands:</p>
-                <div class="prompt-card">
-                    <pre><code>hermes cron list
-hermes cron create "every weekday 7:30am"
-hermes cron run &lt;job-id&gt;
-hermes cron pause &lt;job-id&gt;
-hermes cron remove &lt;job-id&gt;</code></pre>
-                </div>
-                <p>Cron docs: <a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/cron" target="_blank">Hermes cron guide</a>.</p>
-
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>6. Build agents for coding and projects</h3>
-                        <p>Give Hermes an execution standard so it inspects, implements, verifies, and reports clearly.</p>
-                    </div>
-                    <pre><code>I want you to help me build software projects like a practical engineering partner.
-
-Default workflow:
-1. Inspect the repo before changing anything.
-2. Find project instructions: README, AGENTS.md, CLAUDE.md, package files, tests.
-3. Make a small plan.
-4. Implement quickly.
-5. Run tests or a meaningful verification.
-6. Summarize exactly what changed.
-
-When a task is large, use subagents or background work where appropriate. Do not just describe what you would do — actually do it.</code></pre>
-                </div>
-
-                <p>For a new project:</p>
-                <div class="prompt-card">
-                    <pre><code>Create a new project for [describe idea].
+      <section class="prompt-card" id="prompt-5">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 5</div>
+            <h2>Evening change-only briefing</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-5-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-5-code">Create an evening briefing cron job that sends only meaningful changes since the morning briefing.
 
 Requirements:
-- Pick a simple stack unless I specify one.
-- Create the repo/files.
-- Add a README.
-- Add a minimal test or smoke check.
-- Run it locally and verify it works.
-- Tell me the exact next step.</code></pre>
-                </div>
+- schedule: [TIME, e.g. 7pm local time]
+- compare against the last delivered briefing or a compact state file under `~/.hermes/state/`
+- include tomorrow&#x27;s calendar if available
+- include only new important email/news/health items
+- avoid repeating unchanged stories
+- final output should be empty if there is nothing useful and the delivery mechanism supports silent no-op
 
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>7. Create a personal RAG / “save this” brain</h3>
-                        <p>Start simple: local storage, URL ingestion, summaries, chunks, embeddings, and search.</p>
-                    </div>
-                    <pre><code>Design and build me a local personal knowledge base/RAG system.
+Persist a compact state file with delivered story signatures so future runs can dedupe.
+Verify the job appears in `hermes cron list` and explain how to pause/resume it.</code></pre>
+      </section>
 
-Requirements:
-- Runs locally.
-- Ingests URLs and text notes first.
-- Stores source, summary, chunks, entities, and embeddings.
-- Uses SQLite for storage.
-- Uses a local embedding model if possible.
-- Provides CLI commands:
-  - kb ingest &lt;url-or-file&gt;
-  - kb search "&lt;query&gt;"
-  - kb status
-- Add tests for chunking, search, and ingestion.
-- Keep API keys out of committed files.
+      <section class="prompt-card" id="prompt-6">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 6</div>
+            <h2>Content writing skill</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-6-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-6-code">Create a writing skill for my LinkedIn/X/articles.
 
-Start with a simple working version, not an overbuilt architecture.</code></pre>
-                </div>
+First interview me briefly for style calibration:
+- paste 1-3 examples of writing I like
+- paste 1-3 examples of writing I dislike, if available
+- audience I write for
+- topics I want to be known for
+- phrases/tones to avoid
 
-                <h2>GitHub and sharing</h2>
-                <p>The public repo to share is <a href="https://github.com/NousResearch/hermes-agent" target="_blank">NousResearch/hermes-agent</a>. If someone else has a personal knowledge-base repo, treat it as private by default. It may include identity, preferences, internal notes, job-search intel, or other sensitive material.</p>
+Then create a user-local Hermes skill called `[your-name]-writing`.
+It should include:
+- my target voice
+- calibration examples
+- opening patterns that sound like me
+- what to avoid
+- preferred post/article shape
+- rewrite checklist
+- verification checklist
 
-                <div class="prompt-card">
-                    <div class="prompt-card-header">
-                        <h3>8. The single best “teach Hermes how I work” prompt</h3>
-                        <p>If you only paste one prompt after installing Hermes, paste this one.</p>
-                    </div>
-                    <pre><code>Interview me and turn the answers into a working Hermes setup.
+Default style requirements unless I override them:
+- polished and mature
+- compressed, not over-explained
+- opinionated but not performative
+- no generic LinkedIn influencer tone
+- no excessive lists or emoji
+- write a perspective, not a source recap
 
-Goal: make you useful as my personal AI assistant.
+After creating the skill, show me a one-paragraph sample in the new voice and ask if I want refinements.</code></pre>
+      </section>
+
+      <section class="prompt-card" id="prompt-7">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 7</div>
+            <h2>Weekly content prep scheduled jobs</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-7-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-7-code">Set up weekly content prep jobs for me.
+
+Use my writing skill if it exists. If it does not, create it first.
+
+Create two recurring scheduled jobs:
+1. [DAY/TIME] — general thought-leadership draft
+2. [DAY/TIME] — technical/builder/operator draft
+
+Each job should:
+- research current relevant news in my chosen topics
+- select one strong angle, not a generic recap
+- draft a LinkedIn post and a short X/Twitter version
+- optionally include an image concept/prompt if relevant
+- deliver to [Telegram/email/local]
+- avoid posting publicly without explicit approval
+
+Output format:
+TOPIC
+WHY NOW
+LINKEDIN DRAFT
+X DRAFT
+OPTIONAL IMAGE CONCEPT
+SOURCES
+
+Use a cheaper model for routine content scouting if available, but use a stronger model when drafting final polished prose if needed.
+Verify with `hermes cron list`.</code></pre>
+      </section>
+
+      <section class="prompt-card" id="prompt-8">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 8</div>
+            <h2>Job market monitoring skill + cron</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-8-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-8-code">Create a job-market monitoring system for me.
+
+My target roles:
+- Titles: [Director/VP/Head of X]
+- Companies/industries: [TARGET COMPANIES]
+- Location: [REMOTE/NYC/etc.]
+- Compensation target: [COMP]
+- Must-have filters: [e.g. leadership, AI-native, not IC, not contract]
+- Nice-to-have filters: [e.g. platform, enterprise, GTM]
+
+Create a skill called `job-market-monitoring` that defines:
+- search queries
+- source list
+- fit scoring
+- deduplication rules
+- tracker file location, e.g. `~/.hermes/workspace/jobs-tracker.json`
+- alert format
+- update/persistence rules
+
+Then create a scheduled job that runs [daily or twice daily] and only alerts on genuine new matches. If there are no new matches, update the tracker and stay silent.
+
+Verify by doing a dry run with 3-5 searches and show me the tracker structure before scheduling if any write will happen.</code></pre>
+      </section>
+
+      <section class="prompt-card" id="prompt-9">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 9</div>
+            <h2>System health, backup, and spend monitoring</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-9-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-9-code">Set up low-noise maintenance jobs for my Hermes environment.
+
+Create scripts under `~/.hermes/scripts/` and scheduled jobs for:
+1. Hermes health check: run daily or hourly, alert only on real problems
+2. API/model spend monitor: run daily, alert only if spending/usage crosses a threshold
+3. Knowledge base backup: if `~/knowledge/` exists, back it up safely to [private Git repo/local archive/cloud drive], never exposing secrets
+4. Weekly security audit: check suspicious configs/log errors/permission issues, summarize only findings
+
+Rules:
+- deterministic checks should be `script` + `no_agent=True` cron jobs to avoid wasting model tokens
+- scripts must print nothing when there is nothing to report if silence is desired
+- all error reports must redact secrets and tokens
+- cron scripts must live under `~/.hermes/scripts/`; when scheduling with the cronjob tool, pass only the relative filename, not an absolute path
+
+Verify scripts with shell syntax checks and show the final `hermes cron list` summary.</code></pre>
+      </section>
+
+      <section class="prompt-card" id="prompt-10">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 10</div>
+            <h2>Self-improvement system</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-10-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-10-code">Build a lightweight self-improvement system for my Hermes agent.
 
 Create:
-1. A compact user profile.
-2. Durable memory entries for stable preferences.
-3. A ~/knowledge folder with identity, memory, intel, skills, tools, and config.
-4. Three reusable Hermes skills:
-   - daily briefing
-   - project execution
-   - personal research
-5. One scheduled job that delivers a useful daily update.
-6. A short README explaining how my setup works.
+- `~/.hermes/self-improvement/learnings/LEARNINGS.md`
+- `~/.hermes/self-improvement/learnings/ERRORS.md`
+- `~/.hermes/self-improvement/learnings/FEATURE_REQUESTS.md`
+- a simple script or process for scanning recent logs for recurring tool failures
+- a skill called `self-improvement-systems` that explains how to maintain this system
 
-Important:
-- Ask only necessary questions.
-- Prefer simple local files over complex infrastructure.
-- Never store secrets in markdown.
-- Verify every file you create.
-- At the end, show me exact commands to use the system.</code></pre>
-                </div>
+Then create recurring review jobs:
+- daily platform health review
+- weekly security review
+- weekly skill/learning review
 
-                <div class="doctrine">
-                    <h2>The pattern that compounds</h2>
-                    <ul>
-                        <li><strong>Memory</strong> for stable preferences and durable facts.</li>
-                        <li><strong><code>~/knowledge</code></strong> for deeper context the agent can read and update.</li>
-                        <li><strong>Skills</strong> for repeatable workflows.</li>
-                        <li><strong>Cron</strong> for scheduled agents.</li>
-                        <li><strong>Gateway / Telegram</strong> for ambient access.</li>
-                        <li><strong>Local scripts</strong> for deterministic work that does not need model tokens.</li>
-                    </ul>
-                    <p>That is the real setup. The individual prompts will change; the operating model is what keeps getting more useful.</p>
-                </div>
-            </div>
-        </article>
-    </main>
+Rules:
+- do not create noisy reports
+- report failures proactively through my configured messaging platform if available
+- redact secrets
+- if a recurring error has a known fix, add it to a skill or memory rather than just reporting it repeatedly
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>Sandeep Aulakh &middot; NYC &middot; <a href="https://linkedin.com/in/aulakhsandeep">LinkedIn</a> &middot; <a href="https://github.com/aulakhs">GitHub</a></p>
+Verify the files exist and the jobs are scheduled.</code></pre>
+      </section>
+
+      <section class="prompt-card" id="prompt-11">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 11</div>
+            <h2>Personal article / URL knowledge base</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-11-code">Copy prompt</button>
         </div>
-    </footer>
+        <pre><code id="prompt-11-code">Help me build a simple personal article knowledge base.
+
+Goal:
+When I send a URL or say &quot;save this&quot;, Hermes should ingest the article, summarize it, store it locally, and make it searchable later.
+
+Start simple:
+- create `~/.hermes/workspace/personal-kb/`
+- use SQLite or markdown files; choose the simplest reliable option
+- store source URL, title, author if known, date, summary, tags/entities, and extracted text
+- create scripts under `~/.hermes/scripts/`:
+  - `kb-ingest.sh &lt;url&gt;`
+  - `kb-search.sh &lt;query&gt;`
+  - `kb-status.sh`
+
+If Telegram/gateway is configured, propose a safe routing pattern where Hermes is the only Telegram front door. Do not let a sidecar bot poll the same Telegram token as Hermes.
+
+After implementation, ingest one test public article, search it, and show verification output.</code></pre>
+      </section>
+
+      <section class="prompt-card" id="prompt-12">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Prompt 12</div>
+            <h2>Final audit and cleanup</h2>
+          </div>
+          <button class="copy-btn" data-copy="prompt-12-code">Copy prompt</button>
+        </div>
+        <pre><code id="prompt-12-code">Audit the personal Hermes operating system we just built.
+
+Check:
+- useful skills created and no duplicates
+- memory/profile is concise and not overloaded
+- `~/knowledge/` files exist if we created them
+- cron jobs are low-noise and have sane schedules
+- deterministic jobs use scripts/no_agent instead of spending model tokens
+- agent jobs have restricted toolsets
+- delivery channels work
+- secrets are not stored in prompts, memory, knowledge files, or logs we created
+- failure reporting is configured
+
+Then give me:
+1. a one-page summary of what exists
+2. how to pause/resume each scheduled job
+3. the top 5 improvements to make next
+4. any broken auth/config items I need to fix manually</code></pre>
+      </section>
+
+      <section class="prompt-card" id="optional">
+        <div class="prompt-head">
+          <div>
+            <div class="eyebrow">Optional</div>
+            <h2>single bootstrap prompt if your friend wants one long request</h2>
+          </div>
+          <button class="copy-btn" data-copy="optional-code">Copy prompt</button>
+        </div>
+        <pre><code id="optional-code">I want you to configure my new Hermes install into a personal operating assistant. Do this incrementally and verify each step.
+
+Build:
+1. concise user memory/profile from the personal details I provide
+2. a private `~/knowledge/` folder for identity, memory, intel, skills, tools, config, and projects
+3. reusable skills for memory management, briefings, writing/content, job monitoring, and self-improvement
+4. scheduled jobs for morning briefing, evening change-only briefing, weekly content prep, job monitoring, health/spend checks, backup, and weekly security/self-improvement reviews
+5. optional simple article/URL knowledge base with ingest/search scripts
+
+Operating principles:
+- be low-noise; alert only when useful
+- keep secrets out of memory, prompts, logs, and knowledge files
+- use deterministic scripts with `no_agent=True` for simple checks
+- use agent cron only for judgment-heavy work
+- restrict toolsets for scheduled jobs
+- verify every file/job you create
+- never post publicly or send messages externally without explicit approval unless the scheduled job was explicitly created for that delivery
+
+Before doing anything, ask me only the minimum missing questions: timezone, preferred delivery channel, briefing time, topics, career/content goals, and writing examples.</code></pre>
+      </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Built for a friend setting up Hermes Agent. Public prompts only; no private tokens or personal data included.
+  </footer>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const id = button.getAttribute('data-copy');
+        const code = document.getElementById(id).innerText;
+        try {
+          await navigator.clipboard.writeText(code);
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          setTimeout(() => button.textContent = old, 1400);
+        } catch (e) {
+          button.textContent = 'Select text below';
+        }
+      });
+    });
+  </script>
 </body>
 </html>

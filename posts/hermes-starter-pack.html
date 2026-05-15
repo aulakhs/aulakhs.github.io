@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hermes Starter Pack: Build Your Own Personal AI Operating System — Sandeep Aulakh</title>
+    <meta name="description" content="A practical starter pack for turning a fresh Hermes Agent install into a personal assistant with memory, skills, scheduled jobs, Telegram access, and a local knowledge base.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .starter-hero {
+            padding: 48px 0 32px;
+            border-bottom: 3px solid var(--accent);
+            margin-bottom: 32px;
+        }
+        .starter-eyebrow {
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .starter-hero h1 {
+            color: var(--text);
+            font-size: 2.35rem;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .starter-hero p {
+            color: var(--text-secondary);
+            font-size: 1.12rem;
+            line-height: 1.7;
+            max-width: 640px;
+            margin-bottom: 0;
+        }
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 28px 0 8px;
+        }
+        .quick-links a {
+            display: block;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            background: var(--bg-subtle);
+            font-weight: 600;
+            line-height: 1.35;
+        }
+        .quick-links a span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+            font-weight: 400;
+            margin-top: 3px;
+        }
+        .prompt-card {
+            margin: 28px 0;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .prompt-card-header {
+            padding: 18px 20px;
+            background: var(--bg-subtle);
+            border-bottom: 1px solid var(--border);
+        }
+        .prompt-card-header h3 {
+            margin: 0 0 4px;
+            font-size: 1.15rem;
+        }
+        .prompt-card-header p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            background: #0f172a;
+            color: #e5e7eb;
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        }
+        .article-body p code, .article-body li code {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 1px 5px;
+            font-size: 0.9em;
+        }
+        .doctrine {
+            padding: 22px 24px;
+            border-radius: 14px;
+            background: #f6f9ff;
+            border: 1px solid #dbeafe;
+            margin: 30px 0;
+        }
+        .doctrine h2 {
+            margin-top: 0;
+        }
+        .copy-note {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            margin-top: -8px;
+        }
+        @media (max-width: 768px) {
+            .starter-hero h1 { font-size: 1.85rem; }
+            .quick-links { grid-template-columns: 1fr; }
+            pre { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="/" class="site-title">Sandeep Aulakh</a>
+            <nav class="site-nav">
+                <a href="/">Writing</a>
+                <a href="https://linkedin.com/in/aulakhsandeep" target="_blank">LinkedIn</a>
+                <a href="https://github.com/aulakhs" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article>
+            <header class="starter-hero">
+                <div class="starter-eyebrow">Hermes Agent Starter Pack</div>
+                <h1>Build Your Own Personal AI Operating System</h1>
+                <p>A practical set of instructions and copy/paste prompts for turning a fresh Hermes install into a useful personal assistant: memory, skills, scheduled agents, Telegram access, project workflows, and a local knowledge base.</p>
+                <div class="quick-links">
+                    <a href="https://github.com/NousResearch/hermes-agent" target="_blank">Hermes GitHub <span>Source repo and installation script</span></a>
+                    <a href="https://hermes-agent.nousresearch.com/docs" target="_blank">Hermes Docs <span>Setup, tools, gateway, cron, skills</span></a>
+                </div>
+                <div class="post-meta">May 15, 2026 &middot; starter guide</div>
+            </header>
+
+            <div class="article-body">
+                <p>If you just installed Hermes for the first time, do not start by copying someone else’s full setup. Copy the pattern instead: durable memory, a local knowledge base, reusable skills, scheduled jobs, messaging access, and small deterministic scripts for anything repetitive.</p>
+
+                <h2>Install Hermes</h2>
+                <div class="prompt-card">
+                    <pre><code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+hermes setup
+hermes doctor</code></pre>
+                </div>
+                <p>After setup, start Hermes with:</p>
+                <div class="prompt-card">
+                    <pre><code>hermes</code></pre>
+                </div>
+                <p class="copy-note">Then paste the prompts below one by one.</p>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>1. Bootstrap your personal context</h3>
+                        <p>Use this first so Hermes learns who you are and how to work with you.</p>
+                    </div>
+                    <pre><code>Help me turn this Hermes install into my personal assistant.
+
+First, ask me for:
+1. My name, location, timezone, email, and preferred communication style.
+2. My work/career goals.
+3. My recurring tasks.
+4. The tools I use daily.
+5. What kinds of things I want you to remember.
+6. What I do NOT want automated without explicit confirmation.
+
+Then create a compact user profile and save durable preferences to memory. Keep it concise and useful; do not save temporary task state.</code></pre>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>2. Build a local knowledge base</h3>
+                        <p>A filesystem knowledge base is portable across agents and easy to back up.</p>
+                    </div>
+                    <pre><code>Create a local knowledge base for me under ~/knowledge with this structure:
+
+- identity/
+  - about.md
+  - preferences.md
+  - career.md
+- memory/
+  - long-term.md
+  - decisions.md
+- intel/
+  - latest.md
+- skills/
+  - briefing.md
+  - content-creation.md
+  - job-search.md
+- tools/
+  - inventory.md
+- config/
+  - architecture.md
+
+Ask me the minimum questions needed, then create the files with useful starter content. Make the knowledge base vendor-agnostic so any AI agent can read it later.</code></pre>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>3. Create reusable skills</h3>
+                        <p>Skills are the compounding layer: reusable operating procedures Hermes can load when a task matches.</p>
+                    </div>
+                    <pre><code>Help me create my first Hermes skills.
+
+I want skills for:
+1. Daily briefing
+2. Job search monitoring
+3. Content drafting
+4. Personal research
+5. Project/code work
+
+For each skill:
+- Ask what my preferred workflow is.
+- Create a clear SKILL.md with trigger conditions, steps, commands, quality bar, and verification.
+- Keep secrets out of the skill.
+- Save the skills in the right Hermes skills directory.
+- Then show me how to list and load them.</code></pre>
+                </div>
+
+                <p>Useful skill commands:</p>
+                <div class="prompt-card">
+                    <pre><code>hermes skills list
+hermes skills search briefing
+hermes skills install &lt;skill-id&gt;
+hermes -s &lt;skill-name&gt;</code></pre>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>4. Make Hermes available from Telegram or chat</h3>
+                        <p>Gateway mode gives you ambient access to the same local agent from messaging platforms.</p>
+                    </div>
+                    <pre><code>hermes gateway setup
+hermes gateway install
+hermes gateway start
+hermes gateway status</code></pre>
+                </div>
+
+                <p>Then message the bot in Telegram:</p>
+                <div class="prompt-card">
+                    <pre><code>/sethome</code></pre>
+                </div>
+
+                <p>Prompt Hermes to set expectations for chat behavior:</p>
+                <div class="prompt-card">
+                    <pre><code>I want you to be my personal assistant over Telegram.
+
+Set expectations:
+- Be concise.
+- Use tools before asking me to repeat information.
+- Do not send emails, post publicly, or message other people without explicit approval.
+- For scheduled jobs, deliver results here.
+- If something fails in a background job, proactively tell me with error details and next action.</code></pre>
+                </div>
+
+                <p>Messaging docs: <a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging/" target="_blank">Hermes messaging platform guide</a>.</p>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>5. Create scheduled agents and cron jobs</h3>
+                        <p>Use cron for work that should happen without you prompting every time.</p>
+                    </div>
+                    <pre><code>Create a daily morning briefing job for me.
+
+Schedule: every weekday at 7:30am local time.
+
+Include:
+- Weather
+- Calendar
+- Important unread email summary
+- Relevant news for my work
+- Any urgent system or task reminders
+- One recommended action for the day
+
+Make it concise but useful. Deliver to my home Telegram channel. Use a cheaper/faster model unless the work needs deep reasoning.</code></pre>
+                </div>
+
+                <p>Useful cron commands:</p>
+                <div class="prompt-card">
+                    <pre><code>hermes cron list
+hermes cron create "every weekday 7:30am"
+hermes cron run &lt;job-id&gt;
+hermes cron pause &lt;job-id&gt;
+hermes cron remove &lt;job-id&gt;</code></pre>
+                </div>
+                <p>Cron docs: <a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/cron" target="_blank">Hermes cron guide</a>.</p>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>6. Build agents for coding and projects</h3>
+                        <p>Give Hermes an execution standard so it inspects, implements, verifies, and reports clearly.</p>
+                    </div>
+                    <pre><code>I want you to help me build software projects like a practical engineering partner.
+
+Default workflow:
+1. Inspect the repo before changing anything.
+2. Find project instructions: README, AGENTS.md, CLAUDE.md, package files, tests.
+3. Make a small plan.
+4. Implement quickly.
+5. Run tests or a meaningful verification.
+6. Summarize exactly what changed.
+
+When a task is large, use subagents or background work where appropriate. Do not just describe what you would do — actually do it.</code></pre>
+                </div>
+
+                <p>For a new project:</p>
+                <div class="prompt-card">
+                    <pre><code>Create a new project for [describe idea].
+
+Requirements:
+- Pick a simple stack unless I specify one.
+- Create the repo/files.
+- Add a README.
+- Add a minimal test or smoke check.
+- Run it locally and verify it works.
+- Tell me the exact next step.</code></pre>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>7. Create a personal RAG / “save this” brain</h3>
+                        <p>Start simple: local storage, URL ingestion, summaries, chunks, embeddings, and search.</p>
+                    </div>
+                    <pre><code>Design and build me a local personal knowledge base/RAG system.
+
+Requirements:
+- Runs locally.
+- Ingests URLs and text notes first.
+- Stores source, summary, chunks, entities, and embeddings.
+- Uses SQLite for storage.
+- Uses a local embedding model if possible.
+- Provides CLI commands:
+  - kb ingest &lt;url-or-file&gt;
+  - kb search "&lt;query&gt;"
+  - kb status
+- Add tests for chunking, search, and ingestion.
+- Keep API keys out of committed files.
+
+Start with a simple working version, not an overbuilt architecture.</code></pre>
+                </div>
+
+                <h2>GitHub and sharing</h2>
+                <p>The public repo to share is <a href="https://github.com/NousResearch/hermes-agent" target="_blank">NousResearch/hermes-agent</a>. If someone else has a personal knowledge-base repo, treat it as private by default. It may include identity, preferences, internal notes, job-search intel, or other sensitive material.</p>
+
+                <div class="prompt-card">
+                    <div class="prompt-card-header">
+                        <h3>8. The single best “teach Hermes how I work” prompt</h3>
+                        <p>If you only paste one prompt after installing Hermes, paste this one.</p>
+                    </div>
+                    <pre><code>Interview me and turn the answers into a working Hermes setup.
+
+Goal: make you useful as my personal AI assistant.
+
+Create:
+1. A compact user profile.
+2. Durable memory entries for stable preferences.
+3. A ~/knowledge folder with identity, memory, intel, skills, tools, and config.
+4. Three reusable Hermes skills:
+   - daily briefing
+   - project execution
+   - personal research
+5. One scheduled job that delivers a useful daily update.
+6. A short README explaining how my setup works.
+
+Important:
+- Ask only necessary questions.
+- Prefer simple local files over complex infrastructure.
+- Never store secrets in markdown.
+- Verify every file you create.
+- At the end, show me exact commands to use the system.</code></pre>
+                </div>
+
+                <div class="doctrine">
+                    <h2>The pattern that compounds</h2>
+                    <ul>
+                        <li><strong>Memory</strong> for stable preferences and durable facts.</li>
+                        <li><strong><code>~/knowledge</code></strong> for deeper context the agent can read and update.</li>
+                        <li><strong>Skills</strong> for repeatable workflows.</li>
+                        <li><strong>Cron</strong> for scheduled agents.</li>
+                        <li><strong>Gateway / Telegram</strong> for ambient access.</li>
+                        <li><strong>Local scripts</strong> for deterministic work that does not need model tokens.</li>
+                    </ul>
+                    <p>That is the real setup. The individual prompts will change; the operating model is what keeps getting more useful.</p>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Sandeep Aulakh &middot; NYC &middot; <a href="https://linkedin.com/in/aulakhsandeep">LinkedIn</a> &middot; <a href="https://github.com/aulakhs">GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>
